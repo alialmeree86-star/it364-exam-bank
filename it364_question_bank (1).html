@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT364: Entrepreneurship and Innovation - Ultimate 60-Question Bank</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-full bg-slate-50 text-slate-800 flex flex-col font-sans antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-blue-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 shadow-inner">
+                    <i class="fa-solid fa-graduation-cap text-2xl text-amber-300"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider font-semibold text-indigo-200">Saudi Electronic University • IT364</span>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-tight">60-Question Master Bank</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="switchTab('study')" id="nav-study" class="px-4 py-2 rounded-lg font-medium text-sm transition-all bg-white/20 text-white shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Study Bank (60 Qs)
+                </button>
+                <button onclick="switchTab('exam')" id="nav-exam" class="px-4 py-2 rounded-lg font-medium text-sm transition-all bg-transparent hover:bg-white/10 text-indigo-100 flex items-center gap-2">
+                    <i class="fa-solid fa-file-pen"></i> Exam Simulator
+                </button>
+                <button onclick="switchTab('flashcards')" id="nav-flashcards" class="px-4 py-2 rounded-lg font-medium text-sm transition-all bg-transparent hover:bg-white/10 text-indigo-100 flex items-center gap-2">
+                    <i class="fa-solid fa-clone"></i> Flashcards
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-y-auto">
+
+        <!-- ==================== TAB 1: STUDY BANK ==================== -->
+        <section id="tab-study" class="space-y-6">
+            <!-- Search & Filters -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <div class="relative md:col-span-2">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="searchInput" oninput="filterQuestions()" placeholder="Search across all 60 questions by keyword..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                </div>
+                <div>
+                    <select id="moduleFilter" onchange="filterQuestions()" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all font-medium text-slate-700">
+                        <option value="all">📁 All Modules (1 to 5 + Midterm)</option>
+                        <option value="Module 1">Module 1: Entrepreneurs & Small Business</option>
+                        <option value="Module 2">Module 2: Strategic Management</option>
+                        <option value="Module 3">Module 3: Forms of Ownership</option>
+                        <option value="Module 4">Module 4: Franchising & The Law</option>
+                        <option value="Module 5">Module 5: Buying an Existing Business</option>
+                        <option value="Midterm">Midterm Exam Review</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="flex justify-between items-center px-1">
+                <p class="text-sm font-medium text-slate-500" id="resultsCount">Showing all questions</p>
+                <div class="flex gap-2">
+                    <button onclick="expandAll(true)" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 transition-colors">Expand All Explanations</button>
+                    <button onclick="expandAll(false)" class="text-xs text-slate-600 hover:text-slate-800 font-semibold bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 transition-colors">Collapse All</button>
+                </div>
+            </div>
+
+            <!-- Question Cards Container -->
+            <div id="questionsContainer" class="space-y-4">
+                <!-- Injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: EXAM SIMULATOR ==================== -->
+        <section id="tab-exam" class="hidden space-y-6">
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-2xl p-8 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="space-y-2">
+                    <span class="px-3 py-1 bg-indigo-500/30 border border-indigo-400/30 text-indigo-300 rounded-full text-xs font-bold uppercase tracking-wider">Timed Practice Mode</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold">IT364 Comprehensive Mock Exam</h2>
+                    <p class="text-indigo-200 text-sm max-w-xl">Test your mastery across all 60 mixed questions with timer, instant feedback, and scoring.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="startExam()" class="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> Start 60-Q Exam
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exam Interface Container -->
+            <div id="examInterface" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex justify-between items-center sticky top-20 z-40 backdrop-blur-md bg-white/90">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-400 uppercase">Question Progress</span>
+                        <h3 id="examProgressText" class="text-lg font-bold text-slate-800">Question 1 of 60</h3>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100 flex items-center gap-2 text-indigo-700 font-bold text-sm">
+                            <i class="fa-solid fa-clock"></i> <span id="examTimer">60:00</span>
+                        </div>
+                        <button onclick="quitExam()" class="px-4 py-2 bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold rounded-xl text-sm transition-colors">Quit Exam</button>
+                    </div>
+                </div>
+
+                <div id="examCard" class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 space-y-6">
+                    <!-- Dynamic Question View -->
+                </div>
+            </div>
+
+            <!-- Exam Results Container -->
+            <div id="examResults" class="hidden bg-white rounded-2xl p-8 shadow-sm border border-slate-200 text-center space-y-6 max-w-2xl mx-auto">
+                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-bold text-slate-800">Exam Completed Successfully!</h3>
+                    <p class="text-slate-500 text-sm">Here is your performance summary for the 60-question practice test.</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 inline-block w-full">
+                    <div class="text-4xl font-extrabold text-indigo-600 mb-1" id="scoreDisplay">0 / 60</div>
+                    <p class="text-sm font-semibold text-slate-600" id="scorePercentage">0% Correct</p>
+                </div>
+                <div class="flex justify-center gap-4">
+                    <button onclick="startExam()" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md transition-all">Try Again</button>
+                    <button onclick="switchTab('study')" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-all">Review All Questions</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: FLASHCARDS ==================== -->
+        <section id="tab-flashcards" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Interactive Flashcards</h2>
+                    <p class="text-slate-500 text-sm">Master concepts across all 60 interactive cards.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <select id="flashcardModule" onchange="loadFlashcards()" class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700">
+                        <option value="all">All Modules (60 Cards)</option>
+                        <option value="Module 1">Module 1</option>
+                        <option value="Module 2">Module 2</option>
+                        <option value="Module 3">Module 3</option>
+                        <option value="Module 4">Module 4</option>
+                        <option value="Module 5">Module 5</option>
+                        <option value="Midterm">Midterm Review</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Flashcard Display Area -->
+            <div class="max-w-2xl mx-auto py-4">
+                <div id="flashcardWrapper" class="min-h-[320px] bg-gradient-to-br from-white to-indigo-50/30 rounded-3xl p-8 shadow-md border border-indigo-100 flex flex-col justify-between cursor-pointer transition-all hover:shadow-lg relative overflow-hidden" onclick="flipFlashcard()">
+                    <div class="flex justify-between items-center w-full">
+                        <span id="flashcardModuleBadge" class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold uppercase tracking-wider">Module 1</span>
+                        <span id="flashcardCounter" class="text-xs font-semibold text-slate-400">Card 1 of 60</span>
+                    </div>
+                    
+                    <div class="my-auto py-8 text-center space-y-3">
+                        <p class="text-xs font-bold uppercase tracking-widest text-indigo-500" id="flashcardSideLabel">Question / Concept</p>
+                        <h3 id="flashcardText" class="text-xl sm:text-2xl font-bold text-slate-800 leading-snug px-4">Loading flashcard...</h3>
+                    </div>
+
+                    <div class="text-center text-xs text-slate-400 font-medium">
+                        <i class="fa-solid fa-rotate mr-1"></i> Click card to flip and reveal answer
+                    </div>
+                </div>
+
+                <!-- Flashcard Controls -->
+                <div class="flex justify-between items-center mt-6">
+                    <button onclick="prevFlashcard()" class="px-5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl shadow-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Previous
+                    </button>
+                    <span id="flashcardProgressNum" class="text-sm font-bold text-slate-600">1 / 60</span>
+                    <button onclick="nextFlashcard()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        Next <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+            IT364 IT Entrepreneurship and Innovation • 60-Question Comprehensive Master Bank • Based on <span class="font-semibold text-slate-700">Effective Small Business Management</span>.
+        </div>
+    </footer>
+
+    <!-- JavaScript Data and Application Logic -->
+    <script>
+        // Exactly 60 comprehensive questions covering Modules 1 to 5 and Midterm Review
+        const questionBank = [
+            // ==================== MODULE 1 (1 - 12) ====================
+            {
+                id: "q-1",
+                module: "Module 1",
+                slide: "Module 1 - Slide 6",
+                difficulty: "Low",
+                question: "How is an entrepreneur formally defined in the textbook?",
+                options: [
+                    "Someone who inherits a family corporation and maintains its operations.",
+                    "One who establishes a new business in a situation full of risk and uncertainty to achieve profit and growth by identifying opportunities.",
+                    "A salaried manager who oversees daily corporate workflows.",
+                    "An investor who purchases stocks on public exchanges."
+                ],
+                answer: 1,
+                explanation: "Entrepreneurs establish new businesses in risky and uncertain environments to achieve profit and growth by capitalizing on opportunities."
+            },
+            {
+                id: "q-2",
+                module: "Module 1",
+                slide: "Module 1 - Slide 8",
+                difficulty: "Mid",
+                question: "What term describes entrepreneurs who create multiple companies and usually run more than one business simultaneously?",
+                options: [
+                    "Intrapreneurs",
+                    "Copreneurs",
+                    "Serial entrepreneurs",
+                    "Corporate castoffs"
+                ],
+                answer: 2,
+                explanation: "Serial entrepreneurs create and operate multiple companies simultaneously or sequentially."
+            },
+            {
+                id: "q-3",
+                module: "Module 1",
+                slide: "Module 1 - Slide 9",
+                difficulty: "Mid",
+                question: "After selling his first company for a large amount, Majed starts a new venture because he finds satisfaction in building something successful rather than in the money itself. Which entrepreneurial characteristic does this reflect?",
+                options: [
+                    "Value of achievement over money",
+                    "Desire for immediate feedback",
+                    "Tolerance of ambiguity",
+                    "Skill at organizing"
+                ],
+                answer: 0,
+                explanation: "The characteristic of valuing achievement and personal fulfillment over purely monetary rewards is known as the 'Value of achievement over money'."
+            },
+            {
+                id: "q-4",
+                module: "Module 1",
+                slide: "Module 1 - Slide 11",
+                difficulty: "Low",
+                question: "Which statement about entrepreneurship is consistent with the course?",
+                options: [
+                    "Entrepreneurship is limited to people under the age of 30.",
+                    "Entrepreneurial success depends on a single key characteristic.",
+                    "Only people born with certain traits can become entrepreneurs.",
+                    "Entrepreneurship is a skill that can be learned."
+                ],
+                answer: 3,
+                explanation: "Entrepreneurship is a skill that is learned. Anyone can become an entrepreneur irrespective of age, race, gender, color, or national origin."
+            },
+            {
+                id: "q-5",
+                module: "Module 1",
+                slide: "Module 1 - Slide 13",
+                difficulty: "Low",
+                question: "Innovation is best defined as the ability to:",
+                options: [
+                    "develop new ideas without applying them.",
+                    "copy successful products from competitors.",
+                    "apply creative solutions to problems and opportunities to enhance or enrich people’s lives.",
+                    "reduce costs by outsourcing business activities."
+                ],
+                answer: 2,
+                explanation: "Creativity is thinking new things (developing new ideas), whereas Innovation is doing new things (applying creative solutions)."
+            },
+            {
+                id: "q-6",
+                module: "Module 1",
+                slide: "Module 1 - Slide 14",
+                difficulty: "Mid",
+                question: "While visiting a newly built residential district, Noura notices that there is no pharmacy within several kilometres, so she opens one there. Which technique for identifying business opportunities does this BEST illustrate?",
+                options: [
+                    "Take a different approach to an existing market",
+                    "Notice what is missing",
+                    "Monitor trends and exploit them early on",
+                    "Put a new twist on an old idea"
+                ],
+                answer: 1,
+                explanation: "Identifying a gap in the market where a service or product is entirely absent corresponds to 'Notice what is missing'."
+            },
+            {
+                id: "q-7",
+                module: "Module 1",
+                slide: "Module 1 - Slide 16",
+                difficulty: "Mid",
+                question: "Yousef started his own business because he wanted to make his own decisions instead of following orders from a manager. Which benefit of owning a small business does this represent?",
+                options: [
+                    "Opportunity to reap impressive profits",
+                    "Opportunity to contribute to society and be recognized for your efforts",
+                    "Opportunity to gain control over your own destiny",
+                    "Opportunity to make a difference"
+                ],
+                answer: 2,
+                explanation: "Having autonomy and control over one's career and decisions is the core benefit of gaining control over your own destiny."
+            },
+            {
+                id: "q-8",
+                module: "Module 1",
+                slide: "Module 1 - Slide 18",
+                difficulty: "Mid",
+                question: "Before opening his restaurant, Tariq invested all of his personal savings in it. If the restaurant fails, he could lose everything he put in. Which potential drawback of entrepreneurship does this illustrate?",
+                options: [
+                    "Discouragement",
+                    "High levels of stress",
+                    "Lower quality of life until the business gets established",
+                    "Risk of losing your entire invested capital"
+                ],
+                answer: 3,
+                explanation: "Investing personal capital with the possibility of total financial loss is the primary drawback of risking entire invested capital."
+            },
+            {
+                id: "q-9",
+                module: "Module 1",
+                slide: "Module 1 - Slide 21",
+                difficulty: "Mid",
+                question: "A small app company hires external firms to handle its customer support and accounting so that it can concentrate on product development. Which factor fueling the growth of entrepreneurship does this illustrate?",
+                options: [
+                    "Entrepreneurs as heroes",
+                    "Entrepreneurial education",
+                    "Outsourcing",
+                    "Independent lifestyle"
+                ],
+                answer: 2,
+                explanation: "Delegating non-core business activities to external specialists is termed outsourcing."
+            },
+            {
+                id: "q-10",
+                module: "Module 1",
+                slide: "Module 1 - Slide 24",
+                difficulty: "Mid",
+                question: "After being laid off when his employer downsized, Saleh used his experience to start his own consulting firm. In the context of cultural diversity, he is best described as a:",
+                options: [
+                    "corporate dropout.",
+                    "corporate castoff.",
+                    "copreneur.",
+                    "retired baby boomer."
+                ],
+                answer: 1,
+                explanation: "Employees who leave or are laid off from corporate downscaling to start their own businesses are classified as 'corporate castoffs'."
+            },
+            {
+                id: "q-11",
+                module: "Module 1",
+                slide: "Module 1 - Slides 28-30",
+                difficulty: "Mid",
+                question: "Which of the following is one of the rules for a successful home-based business presented in the course?",
+                options: [
+                    "Create distinct zones for your family and business dealings",
+                    "Avoid networking in order to protect your privacy",
+                    "Hire as many outside employees as possible",
+                    "Remove any fixed no-work time so you are always available"
+                ],
+                answer: 0,
+                explanation: "Rule 3 states: 'Create distinct zones for your family and business dealings' to maintain productivity and balance."
+            },
+            {
+                id: "q-12",
+                module: "Module 1",
+                slide: "Module 1 - Slide 35",
+                difficulty: "Low",
+                question: "According to the course, approximately what percentage of new businesses fail within four years?",
+                options: [
+                    "54%",
+                    "10%",
+                    "25%",
+                    "90%"
+                ],
+                answer: 0,
+                explanation: "About 54 percent of new businesses fail within 4 years according to Chapter 1 statistics."
+            },
+
+            // ==================== MODULE 2 (13 - 24) ====================
+            {
+                id: "q-13",
+                module: "Module 2",
+                slide: "Module 2 - Slide 8",
+                difficulty: "Mid",
+                question: "Which of the following represents structural capital?",
+                options: [
+                    "The talents, skills, and abilities of a company's workforce.",
+                    "Accumulated knowledge, experience, software, patents, and copyrights.",
+                    "The established customer base and ongoing brand goodwill.",
+                    "Liquid cash reserves in corporate bank accounts."
+                ],
+                answer: 1,
+                explanation: "Structural capital refers to accumulated knowledge, experience, processes, software, patents, and copyrights."
+            },
+            {
+                id: "q-14",
+                module: "Module 2",
+                slide: "Module 2 - Slide 9",
+                difficulty: "Low",
+                question: "The established customer base, positive reputation, ongoing relationships, and goodwill that a company builds up over time with its customers is called:",
+                options: [
+                    "human capital.",
+                    "customer capital.",
+                    "structural capital.",
+                    "financial capital."
+                ],
+                answer: 1,
+                explanation: "Customer capital refers to the established customer base, reputation, ongoing relationships, and goodwill."
+            },
+            {
+                id: "q-15",
+                module: "Module 2",
+                slide: "Module 2 - Slide 14",
+                difficulty: "Low",
+                question: "According to the course, core competencies are usually built in no more than:",
+                options: [
+                    "three to five areas.",
+                    "one area.",
+                    "ten to fifteen areas.",
+                    "twenty areas."
+                ],
+                answer: 0,
+                explanation: "Core competencies are built in no more than three to five areas that provide superior service and value."
+            },
+            {
+                id: "q-16",
+                module: "Module 2",
+                slide: "Module 2 - Slide 17",
+                difficulty: "Mid",
+                question: "How many steps comprise the strategic management process for small businesses?",
+                options: [
+                    "5 steps",
+                    "7 steps",
+                    "9 steps",
+                    "12 steps"
+                ],
+                answer: 2,
+                explanation: "Strategic management is a continuous process consisting of 9 steps."
+            },
+            {
+                id: "q-17",
+                module: "Module 2",
+                slide: "Module 2 - Slide 22",
+                difficulty: "Low",
+                question: "A mission statement addresses which basic question of any business venture?",
+                options: [
+                    "“What kind of company do we want to become?”",
+                    "“Who are our indirect competitors?”",
+                    "“Which controls should we establish?”",
+                    "“What business am I in?”"
+                ],
+                answer: 3,
+                explanation: "A mission statement answers 'What business am I in?', whereas a vision statement addresses 'What kind of company do we want to become?'"
+            },
+            {
+                id: "q-18",
+                module: "Module 2",
+                slide: "Module 2 - Slide 25",
+                difficulty: "Mid",
+                question: "When conducting a SWOT analysis, internal characteristics of a business that hinder its performance are classified as:",
+                options: [
+                    "Strengths",
+                    "Weaknesses",
+                    "Opportunities",
+                    "Threats"
+                ],
+                answer: 1,
+                explanation: "Weaknesses are internal negative factors that detract from an organization's ability to achieve its goals."
+            },
+            {
+                id: "q-19",
+                module: "Module 2",
+                slide: "Module 2 - Slide 30",
+                difficulty: "Mid",
+                question: "Porter's Five Forces model is used primarily to analyze:",
+                options: [
+                    "internal employee motivation and productivity.",
+                    "the macro-economic inflation rate.",
+                    "industry structure and competitive intensity.",
+                    "daily cash flow statements."
+                ],
+                answer: 2,
+                explanation: "Porter's Five Forces model evaluates industry structure and competitive dynamics."
+            },
+            {
+                id: "q-20",
+                module: "Module 2",
+                slide: "Module 2 - Slide 34",
+                difficulty: "Mid",
+                question: "Which generic strategy involves targeting a specific, narrow market segment and offering tailored products or services to meet their unique needs?",
+                options: [
+                    "Cost Leadership",
+                    "Differentiation",
+                    "Focus (Niche)",
+                    "Diversification"
+                ],
+                answer: 2,
+                explanation: "A focus strategy concentrates on a narrow segment and serves them exclusively with specialized distinction."
+            },
+            {
+                id: "q-21",
+                module: "Module 2",
+                slide: "Module 2 - Slide 42",
+                difficulty: "Mid",
+                question: "What tool combines financial and operational measures into a comprehensive picture of company performance across five perspectives?",
+                options: [
+                    "Competitive Profile Matrix",
+                    "Balanced Scorecard",
+                    "Franchise Disclosure Document",
+                    "Adjusted Balance Sheet"
+                ],
+                answer: 1,
+                explanation: "The balanced scorecard provides a comprehensive picture of performance across customer, internal business, innovation/learning, financial, and corporate citizenship perspectives."
+            },
+            {
+                id: "q-22",
+                module: "Module 2",
+                slide: "Module 2 - Slide 10",
+                difficulty: "Mid",
+                question: "Human capital within an enterprise refers specifically to:",
+                options: [
+                    "the total monetary investment by stockholders.",
+                    "the talents, skills, and abilities of the company's workforce.",
+                    "software algorithms and databases.",
+                    "customer relationship databases."
+                ],
+                answer: 1,
+                explanation: "Human capital represents the collective knowledge, skills, and abilities of employees."
+            },
+            {
+                id: "q-23",
+                module: "Module 2",
+                slide: "Module 2 - Slide 20",
+                difficulty: "Low",
+                question: "What is the primary purpose of establishing clear company objectives during strategic planning?",
+                options: [
+                    "To eliminate all business risk entirely",
+                    "To provide measurable targets and direction for operational activities",
+                    "To satisfy government tax regulations",
+                    "To eliminate the need for employee evaluations"
+                ],
+                answer: 1,
+                explanation: "Objectives provide specific, measurable targets that guide daily operations and strategy execution."
+            },
+            {
+                id: "q-24",
+                module: "Module 2",
+                slide: "Module 2 - Slide 38",
+                difficulty: "Mid",
+                question: "Strategic control systems allow entrepreneurs to:",
+                options: [
+                    "ignore market changes until the fiscal year ends.",
+                    "monitor actual performance against established standards and take corrective action.",
+                    "avoid paying income taxes.",
+                    "outsource top management decisions."
+                ],
+                answer: 1,
+                explanation: "Strategic controls ensure that the firm stays on track by comparing actual results with planned benchmarks."
+            },
+
+            // ==================== MODULE 3 (25 - 36) ====================
+            {
+                id: "q-25",
+                module: "Module 3",
+                slide: "Module 3 - Slide 11",
+                difficulty: "Low",
+                question: "What is the simplest and most popular form of business ownership, comprising nearly 72 percent of all U.S. businesses?",
+                options: [
+                    "C Corporation",
+                    "Limited Liability Company (LLC)",
+                    "Sole Proprietorship",
+                    "Partnership"
+                ],
+                answer: 2,
+                explanation: "Sole proprietorship is the simplest, least costly, and most popular form of ownership."
+            },
+            {
+                id: "q-26",
+                module: "Module 3",
+                slide: "Module 3 - Slide 14",
+                difficulty: "Mid",
+                question: "Which of the following is a primary disadvantage of a sole proprietorship?",
+                options: [
+                    "Double taxation on corporate dividends",
+                    "Unlimited personal liability for business debts",
+                    "Complex government filing fees",
+                    "Mandatory board of directors meetings"
+                ],
+                answer: 1,
+                explanation: "In a sole proprietorship, the owner has unlimited personal liability for all business obligations."
+            },
+            {
+                id: "q-27",
+                module: "Module 3",
+                slide: "Module 3 - Slide 17",
+                difficulty: "Mid",
+                question: "A partnership in which all partners share in management and operational responsibilities and bear unlimited personal liability is a:",
+                options: [
+                    "Limited Partnership",
+                    "General Partnership",
+                    "Corporation",
+                    "Limited Liability Partnership"
+                ],
+                answer: 1,
+                explanation: "A general partnership involves two or more co-owners sharing management and unlimited liability."
+            },
+            {
+                id: "q-28",
+                module: "Module 3",
+                slide: "Module 3 - Slide 20",
+                difficulty: "Mid",
+                question: "A corporation chartered in one state and doing business in another state is known as a:",
+                options: [
+                    "Domestic corporation",
+                    "Foreign corporation",
+                    "Alien corporation",
+                    "Publicly held corporation"
+                ],
+                answer: 1,
+                explanation: "A domestic corporation operates in its home state, while a foreign corporation operates in another state within the same country."
+            },
+            {
+                id: "q-29",
+                module: "Module 3",
+                slide: "Module 3 - Slide 25",
+                difficulty: "Mid",
+                question: "Which of the following is a strict eligibility criterion for a corporation to elect S Corporation status?",
+                options: [
+                    "It can have an unlimited number of shareholders.",
+                    "It can have up to 500 shareholders.",
+                    "It must have no more than 100 shareholders and only one class of common stock.",
+                    "It must be publicly traded on major stock exchanges."
+                ],
+                answer: 2,
+                explanation: "S Corporations must have no more than 100 shareholders and only one class of common stock."
+            },
+            {
+                id: "q-30",
+                module: "Module 3",
+                slide: "Module 3 - Slide 32",
+                difficulty: "Mid",
+                question: "What business structure provides the liability protection of a corporation combined with the pass-through tax benefits of a partnership, without strict shareholder limits?",
+                options: [
+                    "Sole Proprietorship",
+                    "Limited Liability Company (LLC)",
+                    "C Corporation",
+                    "General Partnership"
+                ],
+                answer: 1,
+                explanation: "An LLC provides limited liability protection and flexible pass-through taxation without S Corporation membership restrictions."
+            },
+            {
+                id: "q-31",
+                module: "Module 3",
+                slide: "Module 3 - Slide 12",
+                difficulty: "Low",
+                question: "Which form of ownership offers the greatest degree of freedom from government regulation?",
+                options: [
+                    "C Corporation",
+                    "Sole Proprietorship",
+                    "Nonprofit Corporation",
+                    "Limited Partnership"
+                ],
+                answer: 1,
+                explanation: "Sole proprietorships experience minimal government regulation compared to formal corporate structures."
+            },
+            {
+                id: "q-32",
+                module: "Module 3",
+                slide: "Module 3 - Slide 18",
+                difficulty: "Mid",
+                question: "In a Limited Partnership, what is the role of a limited partner?",
+                options: [
+                    "They manage daily business operations and assume unlimited debt.",
+                    "They contribute capital but do not actively manage the business, enjoying limited liability.",
+                    "They receive guaranteed salaries regardless of profit.",
+                    "They hold voting rights on all operational decisions."
+                ],
+                answer: 1,
+                explanation: "Limited partners contribute capital and enjoy liability limited to their investment, but cannot participate in management."
+            },
+            {
+                id: "q-33",
+                module: "Module 3",
+                slide: "Module 3 - Slide 22",
+                difficulty: "Mid",
+                question: "What is a major tax disadvantage of a traditional C Corporation?",
+                options: [
+                    "Tax exemption",
+                    "Double taxation (corporate earnings taxed, then dividends taxed to shareholders)",
+                    "Single pass-through taxation",
+                    "Zero corporate tax rates"
+                ],
+                answer: 1,
+                explanation: "C corporations suffer from double taxation: profits are taxed at the corporate level, and dividends are taxed again on personal returns."
+            },
+            {
+                id: "q-34",
+                module: "Module 3",
+                slide: "Module 3 - Slide 28",
+                difficulty: "Mid",
+                question: "What document must founders file with the state government to officially establish a corporation?",
+                options: [
+                    "Partnership agreement",
+                    "Articles of Incorporation",
+                    "Franchise Disclosure Document",
+                    "Balanced Scorecard"
+                ],
+                answer: 1,
+                explanation: "Articles of Incorporation (or certificate of incorporation) form the legal basis of a corporation."
+            },
+            {
+                id: "q-35",
+                module: "Module 3",
+                slide: "Module 3 - Slide 30",
+                difficulty: "Low",
+                question: "Who ultimately governs a corporation on behalf of the shareholders?",
+                options: [
+                    "The operational employees",
+                    "The Board of Directors",
+                    "The external auditors",
+                    "The local municipality"
+                ],
+                answer: 1,
+                explanation: "The Board of Directors is elected by shareholders to oversee major strategic decisions and corporate governance."
+            },
+            {
+                id: "q-36",
+                module: "Module 3",
+                slide: "Module 3 - Slide 35",
+                difficulty: "Mid",
+                question: "Why might an entrepreneur choose a C Corporation over an LLC?",
+                options: [
+                    "To avoid all taxes",
+                    "To attract venture capital and issue stock options easily to employees",
+                    "To keep financial records entirely private",
+                    "To eliminate all legal paperwork"
+                ],
+                answer: 1,
+                explanation: "C corporations are favored by institutional investors and venture capitalists because issuing stock classes and stock options is standardized."
+            },
+
+            // ==================== MODULE 4 (37 - 48) ====================
+            {
+                id: "q-37",
+                module: "Module 4",
+                slide: "Module 4 - Slide 8",
+                difficulty: "Low",
+                question: "How is franchising best summarized in the course?",
+                options: [
+                    "Working for a massive multinational corporation without owning shares.",
+                    "Going into business for yourself, but not by yourself.",
+                    "Operating a fully independent venture with no outside royalties.",
+                    "Purchasing franchise stock on public exchanges."
+                ],
+                answer: 1,
+                explanation: "Franchising gives semi-independent owners the right to use a proven business system: 'Going into business for yourself, but not by yourself'."
+            },
+            {
+                id: "q-38",
+                module: "Module 4",
+                slide: "Module 4 - Slide 12",
+                difficulty: "Mid",
+                question: "Which type of franchising involves licensing the franchisor's trade name and specific distribution system (e.g., soft drink bottlers or gas stations)?",
+                options: [
+                    "Product distribution franchising",
+                    "Business format franchising",
+                    "Pure franchising",
+                    "Cobranding"
+                ],
+                answer: 0,
+                explanation: "Product distribution franchising licenses a franchisee to sell specific products under the manufacturer's brand name."
+            },
+            {
+                id: "q-39",
+                module: "Module 4",
+                slide: "Module 4 - Slide 14",
+                difficulty: "Mid",
+                question: "Which type of franchising provides a complete operating system, including marketing, training, operational manuals, and site selection (e.g., fast food restaurants)?",
+                options: [
+                    "Product distribution franchising",
+                    "Business format franchising",
+                    "Wholesale franchising",
+                    "Limited partnership franchising"
+                ],
+                answer: 1,
+                explanation: "Business format franchising provides a comprehensive blueprint for operating the entire business."
+            },
+            {
+                id: "q-40",
+                module: "Module 4",
+                slide: "Module 4 - Slide 18",
+                difficulty: "Mid",
+                question: "What is the key disclosure document that franchisors are legally required to deliver to prospective franchisees before any offer or sale?",
+                options: [
+                    "Franchise Disclosure Document (FDD)",
+                    "Uniform Partnership Act (UPA)",
+                    "Balanced Scorecard Report",
+                    "Corporate Charter"
+                ],
+                answer: 0,
+                explanation: "The Franchise Disclosure Document (FDD) contains 23 topics of vital information required by FTC trade regulation rules."
+            },
+            {
+                id: "q-41",
+                module: "Module 4",
+                slide: "Module 4 - Slide 26",
+                difficulty: "Mid",
+                question: "What trend in franchising involves teaming up with complementary products or services in a single location?",
+                options: [
+                    "Refranchising",
+                    "Cobranding",
+                    "Intercept marketing",
+                    "Conversion franchising"
+                ],
+                answer: 1,
+                explanation: "Cobranding or combination franchising involves pairing two compatible brand concepts in one location."
+            },
+            {
+                id: "q-42",
+                module: "Module 4",
+                slide: "Module 4 - Slide 22",
+                difficulty: "Mid",
+                question: "What is a primary advantage of purchasing a franchise compared to starting an independent startup?",
+                options: [
+                    "Complete creative control over product recipes and prices",
+                    "Proven business model and established brand recognition reducing failure risk",
+                    "Zero upfront fees or ongoing royalties",
+                    "Exemption from local zoning laws"
+                ],
+                answer: 1,
+                explanation: "Franchises offer a proven system, established brand equity, and structured support."
+            },
+            {
+                id: "q-43",
+                module: "Module 4",
+                slide: "Module 4 - Slide 24",
+                difficulty: "Mid",
+                question: "What is a common disadvantage or restriction faced by franchisees?",
+                options: [
+                    "Guaranteed profits regardless of economic conditions",
+                    "Strict adherence to operational standards and ongoing royalty payments",
+                    "Absolute freedom to alter the brand logo",
+                    "Freedom from all supply chain contracts"
+                ],
+                answer: 1,
+                explanation: "Franchisees must pay ongoing royalties and strictly comply with operating manuals and standardized rules."
+            },
+            {
+                id: "q-44",
+                module: "Module 4",
+                slide: "Module 4 - Slide 19",
+                difficulty: "Low",
+                question: "How many distinct items or topics are covered within a standard Franchise Disclosure Document (FDD)?",
+                options: [
+                    "10 items",
+                    "15 items",
+                    "23 items",
+                    "50 items"
+                ],
+                answer: 2,
+                explanation: "The FDD features exactly 23 structured items disclosing litigation history, fees, financials, and obligations."
+            },
+            {
+                id: "q-45",
+                module: "Module 4",
+                slide: "Module 4 - Slide 28",
+                difficulty: "Mid",
+                question: "What is 'conversion franchising'?",
+                options: [
+                    "Converting a franchise into an independent sole proprietorship.",
+                    "Independent business owners rebranding their existing businesses to join a franchise network.",
+                    "Converting common stock into preferred stock.",
+                    "Transforming a product franchise into a pure wholesale business."
+                ],
+                answer: 1,
+                explanation: "Conversion franchising allows existing independent operators to join a franchise network to gain brand strength."
+            },
+            {
+                id: "q-46",
+                module: "Module 4",
+                slide: "Module 4 - Slide 16",
+                difficulty: "Low",
+                question: "What fee is typically paid by the franchisee to the franchisor upfront for the right to operate under the brand name?",
+                options: [
+                    "Initial franchise fee",
+                    "Dividend tax",
+                    "Structural capital fee",
+                    "Liquidation tariff"
+                ],
+                answer: 0,
+                explanation: "An initial franchise fee is paid upfront for joining the system and receiving initial training."
+            },
+            {
+                id: "q-47",
+                module: "Module 4",
+                slide: "Module 4 - Slide 29",
+                difficulty: "Mid",
+                question: "Why do franchisors enforce strict quality control standards across all franchise outlets?",
+                options: [
+                    "To increase employee turnover",
+                    "To protect the brand's reputation and customer trust across the entire network",
+                    "To eliminate local advertising",
+                    "To reduce their own tax liability"
+                ],
+                answer: 1,
+                explanation: "A single poor-performing outlet can damage the reputation and goodwill of the entire franchise network."
+            },
+            {
+                id: "q-48",
+                module: "Module 4",
+                slide: "Module 4 - Slide 31",
+                difficulty: "Mid",
+                question: "What is territorial protection in a franchise agreement?",
+                options: [
+                    "The right of the franchisee to operate military security services",
+                    "A clause specifying a designated geographic area where the franchisor cannot open another outlet or grant another franchise",
+                    "Exemption from state property taxes",
+                    "The right to export products internationally"
+                ],
+                answer: 1,
+                explanation: "Territorial protection shields franchisees from direct internal competition within a specified geographic radius."
+            },
+
+            // ==================== MODULE 5 (49 - 60) ====================
+            {
+                id: "q-49",
+                module: "Module 5",
+                slide: "Module 5 - Slide 16",
+                difficulty: "Mid",
+                question: "What is the term for studying, reviewing, and verifying all relevant financial, legal, and operational information concerning acquisition targets?",
+                options: [
+                    "Benchmarking",
+                    "Due diligence",
+                    "Capitalization",
+                    "Cobranding"
+                ],
+                answer: 1,
+                explanation: "Due diligence involves investigating and verifying motivation, assets, market potential, legal issues, and financial condition before purchase."
+            },
+            {
+                id: "q-50",
+                module: "Module 5",
+                slide: "Module 5 - Slide 26",
+                difficulty: "Mid",
+                question: "Which valuation technique computes the book value of net worth by subtracting total liabilities from total assets, with a variation adjusting figures to actual market value?",
+                options: [
+                    "Earnings Approach",
+                    "Market Approach",
+                    "Balance Sheet Technique",
+                    "Discounted Future Earnings Approach"
+                ],
+                answer: 2,
+                explanation: "The Balance Sheet technique (and adjusted variation) calculates net worth as Total Assets minus Total Liabilities."
+            },
+            {
+                id: "q-51",
+                module: "Module 5",
+                slide: "Module 5 - Slide 43",
+                difficulty: "Mid",
+                question: "What arrangement allows a business owner to sell a majority interest while agreeing to stay on and manage the business for a few more years under an agreed percentage of asking price?",
+                options: [
+                    "Straight business sale",
+                    "Earn-out",
+                    "Family Limited Partnership",
+                    "ESOP"
+                ],
+                answer: 1,
+                explanation: "An earn-out is a deal structure where the seller accepts partial upfront cash and stays on to manage under the new owner."
+            },
+            {
+                id: "q-52",
+                module: "Module 5",
+                slide: "Module 5 - Slide 10",
+                difficulty: "Low",
+                question: "What is a primary advantage of buying an existing business compared to starting from scratch?",
+                options: [
+                    "Zero financial risk of hidden liabilities",
+                    "Existing customers, established supplier relationships, and immediate cash flow",
+                    "Guaranteed freedom from all previous employee lawsuits",
+                    "Guaranteed lower purchase price than startup costs"
+                ],
+                answer: 1,
+                explanation: "Buying an existing business offers immediate cash flow, established customer base, and operational readiness."
+            },
+            {
+                id: "q-53",
+                module: "Module 5",
+                slide: "Module 5 - Slide 12",
+                difficulty: "Mid",
+                question: "What is a major disadvantage or hidden hazard of acquiring an existing business?",
+                options: [
+                    "The business is already proven successful forever",
+                    "The previous owner may have left a damaged reputation, disgruntled employees, or obsolete inventory",
+                    "Suppliers will refuse to work with new owners",
+                    "Tax authorities exempt existing businesses from audits"
+                ],
+                answer: 1,
+                explanation: "Acquiring a business can inherit hidden skeletons, such as poor reputation, outdated equipment, or bad employee morale."
+            },
+            {
+                id: "q-54",
+                module: "Module 5",
+                slide: "Module 5 - Slide 20",
+                difficulty: "Mid",
+                question: "Why is it important to analyze the previous owner's real motivation for selling?",
+                options: [
+                    "To determine their favorite sports team",
+                    "To uncover potential undisclosed problems such as declining market share, pending lawsuits, or burnout",
+                    "To calculate the exact sales tax rate",
+                    "To avoid signing a bill of sale"
+                ],
+                answer: 1,
+                explanation: "Understanding seller motivation helps unearth hidden operational or financial distress."
+            },
+            {
+                id: "q-55",
+                module: "Module 5",
+                slide: "Module 5 - Slide 29",
+                difficulty: "Mid",
+                question: "The earnings approach to valuing a business typically capitalizes or discounts:",
+                options: [
+                    "historical employee headcount.",
+                    "projected future earnings or net cash flows.",
+                    "total physical square footage.",
+                    "book value of office furniture."
+                ],
+                answer: 1,
+                explanation: "The earnings approach values a business based on its capacity to generate future net earnings or cash flows."
+            },
+            {
+                id: "q-56",
+                module: "Module 5",
+                slide: "Module 5 - Slide 32",
+                difficulty: "Mid",
+                question: "What valuation method looks at the selling prices of similar businesses recently sold in the same geographic region and industry?",
+                options: [
+                    "Market Approach (Comparable Sales)",
+                    "Balance Sheet Technique",
+                    "Liquidation Value Method",
+                    "Discounted Dividend Model"
+                ],
+                answer: 0,
+                explanation: "The market approach relies on comparable sales data from similar businesses in the industry."
+            },
+            {
+                id: "q-57",
+                module: "Module 5",
+                slide: "Module 5 - Slide 38",
+                difficulty: "Mid",
+                question: "What is a 'bulk transfer' law (Uniform Commercial Code Article 6) designed to protect during a business purchase?",
+                options: [
+                    "The buyer from sudden employee strikes",
+                    "Creditors of the seller by requiring advance notice so they can collect unpaid debts",
+                    "The seller from paying income tax",
+                    "The landlord from unpaid utility bills"
+                ],
+                answer: 1,
+                explanation: "Bulk transfer laws protect creditors by ensuring business sale proceeds are not hidden before debts are settled."
+            },
+            {
+                id: "q-58",
+                module: "Module 5",
+                slide: "Module 5 - Slide 40",
+                difficulty: "Low",
+                question: "What legal document finalizes the transfer of ownership and itemizes what assets are included in the sale?",
+                options: [
+                    "Franchise Disclosure Document",
+                    "Bill of Sale",
+                    "Articles of Incorporation",
+                    "Balanced Scorecard"
+                ],
+                answer: 1,
+                explanation: "The bill of sale legally transfers ownership of specified assets from seller to buyer."
+            },
+            {
+                id: "q-59",
+                module: "Module 5",
+                slide: "Module 5 - Slide 35",
+                difficulty: "Mid",
+                question: "What is a 'covenant not to compete' (non-compete agreement) in a business purchase contract?",
+                options: [
+                    "An agreement preventing employees from quitting",
+                    "A legal clause restricting the seller from opening a competing business within a specified geographic area and time period",
+                    "A ban on competing in athletic tournaments",
+                    "An agreement preventing suppliers from raising prices"
+                ],
+                answer: 1,
+                explanation: "A non-compete clause prevents the former owner from immediately opening a rival business and luring away the established customer base."
+            },
+            {
+                id: "q-60",
+                module: "Midterm",
+                slide: "Midterm Review - Comprehensive",
+                difficulty: "Mid",
+                question: "Which of the following best captures the holistic essence of IT364 (IT Entrepreneurship and Innovation)?",
+                options: [
+                    "Memorizing corporate accounting software shortcuts without strategic context",
+                    "Combining creativity, strategic planning, optimal legal ownership structures, and growth models to build sustainable technology-driven ventures",
+                    "Relying solely on luck and government subsidies",
+                    "Operating without a business plan or market research"
+                ],
+                answer: 1,
+                explanation: "IT364 integrates entrepreneurial mindset, innovation, strategic management, legal structures (sole proprietorship, LLC, corporations), franchising, and acquisition strategies."
+            }
+        ];
+
+        // App State
+        let currentTab = 'study';
+        let currentFlashcardIndex = 0;
+        let isFlashcardFlipped = false;
+        let examQuestions = [];
+        let currentExamIndex = 0;
+        let examAnswers = {};
+        let examTimerInterval = null;
+        let timeLeft = 3600; // 60 minutes for 60 questions
+
+        // Initialization
+        window.onload = function() {
+            renderQuestions(questionBank);
+            setupFlashcards();
+        };
+
+        // Tab Switching
+        function switchTab(tabId) {
+            currentTab = tabId;
+            ['study', 'exam', 'flashcards'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).classList.remove('bg-white/20', 'text-white', 'shadow-sm');
+                document.getElementById(`nav-${t}`).classList.add('bg-transparent', 'text-indigo-100');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabId}`).classList.remove('bg-transparent', 'text-indigo-100');
+            document.getElementById(`nav-${tabId}`).classList.add('bg-white/20', 'text-white', 'shadow-sm');
+
+            if (tabId === 'exam') {
+                quitExam();
+            }
+        }
+
+        // Render Study Questions
+        function renderQuestions(questionsToRender) {
+            const container = document.getElementById('questionsContainer');
+            document.getElementById('resultsCount').innerText = `Showing ${questionsToRender.length} of ${questionBank.length} questions`;
+            
+            if (questionsToRender.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-12 text-center border border-slate-200">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                        <h3 class="text-lg font-bold text-slate-700">No matching questions found</h3>
+                        <p class="text-sm text-slate-400">Try adjusting your search terms or module filter.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = questionsToRender.map((q, idx) => `
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 transition-all hover:shadow-md space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">${q.module}</span>
+                            <span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium"><i class="fa-solid fa-bookmark mr-1 text-slate-400"></i> ${q.slide}</span>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-lg ${q.difficulty === 'Low' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">Difficulty: ${q.difficulty}</span>
+                    </div>
+
+                    <h3 class="text-base sm:text-lg font-bold text-slate-800 leading-snug">
+                        <span class="text-indigo-600 mr-1.5 font-extrabold">Q${idx + 1}.</span> ${q.question}
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                        ${q.options.map((opt, optIdx) => {
+                            const isCorrect = optIdx === q.answer;
+                            return `
+                                <div class="p-3 rounded-xl border text-sm flex items-start gap-3 ${isCorrect ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900 font-medium shadow-sm' : 'bg-slate-50/50 border-slate-200/80 text-slate-700'}">
+                                    <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${isCorrect ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}">${String.fromCharCode(65 + optIdx)}</span>
+                                    <span class="mt-0.5">${opt}</span>
+                                    ${isCorrect ? '<i class="fa-solid fa-circle-check text-emerald-600 ml-auto mt-1"></i>' : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="toggleExplanation('${q.id}')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 focus:outline-none">
+                            <i id="icon-${q.id}" class="fa-solid fa-chevron-down transition-transform"></i> View Explanation & Textbook Context
+                        </button>
+                        <div id="exp-${q.id}" class="hidden mt-3 p-4 bg-indigo-50/50 border border-indigo-100 rounded-xl text-sm text-slate-700 leading-relaxed">
+                            <strong class="text-indigo-900 block mb-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Explanation:</strong>
+                            ${q.explanation}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Questions
+        function filterQuestions() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const modFilter = document.getElementById('moduleFilter').value;
+
+            const filtered = questionBank.filter(q => {
+                const matchesMod = modFilter === 'all' || q.module === modFilter;
+                const matchesQuery = q.question.toLowerCase().includes(query) || 
+                                     q.options.some(o => o.toLowerCase().includes(query)) ||
+                                     q.explanation.toLowerCase().includes(query);
+                return matchesMod && matchesQuery;
+            });
+
+            renderQuestions(filtered);
+        }
+
+        // Toggle Explanation
+        function toggleExplanation(id) {
+            const expDiv = document.getElementById(`exp-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            if (expDiv.classList.contains('hidden')) {
+                expDiv.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                expDiv.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Expand/Collapse All
+        function expandAll(expand) {
+            questionBank.forEach(q => {
+                const expDiv = document.getElementById(`exp-${q.id}`);
+                const icon = document.getElementById(`icon-${q.id}`);
+                if (expDiv && icon) {
+                    if (expand) {
+                        expDiv.classList.remove('hidden');
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        expDiv.classList.add('hidden');
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                }
+            });
+        }
+
+        // ==================== EXAM SIMULATOR LOGIC ====================
+        function startExam() {
+            examQuestions = [...questionBank]; // Use all 60 questions
+            currentExamIndex = 0;
+            examAnswers = {};
+            timeLeft = 3600;
+
+            document.getElementById('tab-exam').querySelector('.bg-gradient-to-br').classList.add('hidden');
+            document.getElementById('examInterface').classList.remove('hidden');
+            document.getElementById('examResults').classList.add('hidden');
+
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examTimerInterval = setInterval(updateExamTimer, 1000);
+
+            renderExamQuestion();
+        }
+
+        function quitExam() {
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            document.getElementById('tab-exam').querySelector('.bg-gradient-to-br').classList.remove('hidden');
+            document.getElementById('examInterface').classList.add('hidden');
+            document.getElementById('examResults').classList.add('hidden');
+        }
+
+        function updateExamTimer() {
+            timeLeft--;
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('examTimer').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                clearInterval(examTimerInterval);
+                finishExam();
+            }
+        }
+
+        function renderExamQuestion() {
+            const q = examQuestions[currentExamIndex];
+            document.getElementById('examProgressText').innerText = `Question ${currentExamIndex + 1} of ${examQuestions.length}`;
+            
+            const card = document.getElementById('examCard');
+            card.innerHTML = `
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">${q.module}</span>
+                    <span class="text-xs font-semibold text-slate-400">Question ID: ${q.id}</span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-800 leading-snug">${q.question}</h3>
+
+                <div class="space-y-3 pt-2">
+                    ${q.options.map((opt, optIdx) => {
+                        const isSelected = examAnswers[currentExamIndex] === optIdx;
+                        return `
+                            <button onclick="selectExamAnswer(${currentExamIndex}, ${optIdx})" class="w-full text-left p-4 rounded-xl border transition-all flex items-center gap-3 ${isSelected ? 'bg-indigo-50 border-indigo-500 text-indigo-900 font-semibold shadow-sm' : 'bg-slate-50/50 border-slate-200 hover:bg-slate-100 text-slate-700'}">
+                                <span class="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-600'}">${String.fromCharCode(65 + optIdx)}</span>
+                                <span class="text-sm">${opt}</span>
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="flex justify-between items-center pt-6 border-t border-slate-100">
+                    <button onclick="prevExamQuestion()" ${currentExamIndex === 0 ? 'disabled class="opacity-50 cursor-not-allowed px-5 py-2.5 bg-slate-100 text-slate-400 font-semibold rounded-xl"' : 'class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-all"'}>
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Previous
+                    </button>
+                    ${currentExamIndex < examQuestions.length - 1 ? 
+                        `<button onclick="nextExamQuestion()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md transition-all">Next <i class="fa-solid fa-arrow-right ml-1"></i></button>` :
+                        `<button onclick="finishExam()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition-all">Submit Exam <i class="fa-solid fa-check ml-1"></i></button>`
+                    }
+                </div>
+            `;
+        }
+
+        function selectExamAnswer(qIdx, optIdx) {
+            examAnswers[qIdx] = optIdx;
+            renderExamQuestion();
+        }
+
+        function nextExamQuestion() {
+            if (currentExamIndex < examQuestions.length - 1) {
+                currentExamIndex++;
+                renderExamQuestion();
+            }
+        }
+
+        function prevExamQuestion() {
+            if (currentExamIndex > 0) {
+                currentExamIndex--;
+                renderExamQuestion();
+            }
+        }
+
+        function finishExam() {
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            let score = 0;
+            examQuestions.forEach((q, idx) => {
+                if (examAnswers[idx] === q.answer) score++;
+            });
+
+            document.getElementById('examInterface').classList.add('hidden');
+            document.getElementById('examResults').classList.remove('hidden');
+
+            const percentage = Math.round((score / examQuestions.length) * 100);
+            document.getElementById('scoreDisplay').innerText = `${score} / ${examQuestions.length}`;
+            document.getElementById('scorePercentage').innerText = `${percentage}% Correct Score`;
+        }
+
+        // ==================== FLASHCARDS LOGIC ====================
+        function setupFlashcards() {
+            loadFlashcards();
+        }
+
+        function loadFlashcards() {
+            currentFlashcardIndex = 0;
+            isFlashcardFlipped = false;
+            renderFlashcard();
+        }
+
+        function getFilteredFlashcards() {
+            const mod = document.getElementById('flashcardModule').value;
+            if (mod === 'all') return questionBank;
+            return questionBank.filter(q => q.module === mod);
+        }
+
+        function renderFlashcard() {
+            const cards = getFilteredFlashcards();
+            if (cards.length === 0) return;
+
+            const card = cards[currentFlashcardIndex];
+            document.getElementById('flashcardModuleBadge').innerText = card.module;
+            document.getElementById('flashcardCounter').innerText = `Card ${currentFlashcardIndex + 1} of ${cards.length}`;
+            document.getElementById('flashcardProgressNum').innerText = `${currentFlashcardIndex + 1} / ${cards.length}`;
+
+            const sideLabel = document.getElementById('flashcardSideLabel');
+            const textEl = document.getElementById('flashcardText');
+
+            if (!isFlashcardFlipped) {
+                sideLabel.innerText = "Question / Concept";
+                sideLabel.className = "text-xs font-bold uppercase tracking-widest text-indigo-500";
+                textEl.innerText = card.question;
+            } else {
+                sideLabel.innerText = "Correct Answer & Explanation";
+                sideLabel.className = "text-xs font-bold uppercase tracking-widest text-emerald-600";
+                const correctOpt = card.options[card.answer];
+                textEl.innerHTML = `<span class="text-emerald-700 font-bold block mb-2">Answer: ${correctOpt}</span><span class="text-sm font-normal text-slate-600">${card.explanation}</span>`;
+            }
+        }
+
+        function flipFlashcard() {
+            isFlashcardFlipped = !isFlashcardFlipped;
+            renderFlashcard();
+        }
+
+        function nextFlashcard() {
+            const cards = getFilteredFlashcards();
+            isFlashcardFlipped = false;
+            currentFlashcardIndex = (currentFlashcardIndex + 1) % cards.length;
+            renderFlashcard();
+        }
+
+        function prevFlashcard() {
+            const cards = getFilteredFlashcards();
+            isFlashcardFlipped = false;
+            currentFlashcardIndex = (currentFlashcardIndex - 1 + cards.length) % cards.length;
+            renderFlashcard();
+        }
+    </script>
+</body>
+</html>
